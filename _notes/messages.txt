@@ -1,0 +1,67 @@
+dam = 'do',  dam-quantification
+dam-quantification = (N, 'damage', dam-target , ['for each of', count]) | complex-count;
+dam-target = ('to' | 'from'), ['one of your pokemon','that pokemon'];
+
+heal = 'heal', dam-quantification, ['from one of your pokemon' | 'from that pokemon' | ...];
+
+cond(repeated-flip) = 'flip a coin', N, 'times', 'Every time you get heads', TrueBranch, ['but every time you get tails', ElseBranch].
+
+cond(flip) = 'flip a coin. if heads', TrueBranch, ['if tails', ElseBranch];
+cond(choice) = 'if you so choose', TrueBranch, ['if not', ElseBranch];
+cond(healed) = 'if', (target | 'this pokemon'), 'was healed during this turn,', TrueBranch, ['else', ElseBranch];
+cond(ability) = 'if you choose to use this ability';
+cond(ineq) = 'if', target, 'has', ['at least' | 'more than'], N, filter, 'then', TrueBranch, ['otherwise', ElseBranch].
+
+deenergize = 'remove', energy-quantification, 'from', target-reflexive.
+energy-quantification = (N, 'energy', ['for each of', count]) | complex-count;
+
+search(n>0) = 'Look', search-scope, ', then take', M, filter-cards;
+search(n=0) = 'Look', search-scope;
+search-scope = ('at' | 'through'), ['the', ('top' | 'bottom'), N, 'cards', 'of'], ('your' | "the opponent's"), ('deck' | 'discard pile');
+
+draw(your) = 'draw', N, 'cards';
+draw(opponent) = ['The opponent'], 'draws', N, 'cards';
+
+shuffle(your) = 'shuffle your deck';
+shuffle(opponent) = 'The opponent shuffles their deck';
+
+applystat = ('The opposing' | 'Your'), 'pokemon is now', statuses;
+destat = 'All status effects are removed from', target;
+null = 'Do nothing';
+
+redamage = 'Distribute', ('all of the damage' | quantification), 'from', source, 'among', targets;
+
+reenergize = 'Move', energy-quantification, 'energy from', target, 'to', other-target;
+deck = ('Place'|'The opponent places'), [count, 'cards'], 'from', source, 'onto', ('your' | 'their'), ('deck' | 'discard pile');
+swap = ('Switch'|'Switches'), [count,'pokemon','from'],  target, 'with', [count, 'from'], target;
+add = 'Each time', trigger, ',', action;
+trigger = ('you','the opponent'), ('end your turn','ends their turn');
+
+target(self) = 'the Pokemon to which this card is attached';
+target(your-active) = [('energy card' | 'damage counter'), 'on'], 'your active pokemon';
+target(opponent-active) = 'the opposing pokemon';
+target(your-bench) = 'your bench';
+target(opponent-bench) = "the opponent's bench";
+target(your-hand) = 'your hand';
+target(choice:your) = 'any one of your pokemon';
+target(choice:opponent) = 'any one of the opponent's pokemon';
+target(choice:opponent-bench) = 'any one of the opponent's benched pokemon'; 
+target(choice:your-bench) = 'any one of your benched pokemon';
+target(choice:your-pokemon) = 'any one of your', [Cat], 'pokemon';
+target(last) = 'that pokemon';
+
+filter(pokemon) = [Cat], 'pokemon card';
+filter(energy) = [Cat], 'energy card';
+filter(item) = 'item' | ([Cat], 'card');
+filter(evolves-from) = 'card evolving from', If;
+
+count(N*Target) = N, unit, 'for every', target;
+
+
+
+#sentence([,,,,]).
+#phrase([,,,,,,,,,])
+#list([,,,,]).
+#sequence([,,,,]).
+#quantity(5,'card','cards')
+
