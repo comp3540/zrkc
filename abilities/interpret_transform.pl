@@ -1,3 +1,9 @@
+
+merge_applystat(A,T,[A|T]).
+merge_applystat(applystat(Status,Target),[applystat(StatusS,Target)|ActionS],[applystat([Status|StatusS],Target)|ActionS]).
+
+
+
 flip_run(N,cond(if(flip),True,False),cond(if(flip(N),True,False))).
 
 /**
@@ -10,21 +16,12 @@ flip_run(N,cond(if(flip),True,False),cond(if(flip(N),True,False))).
  * indicate that RLE should not be be performed for value X.
  */
 
+rle_(X, (Pattern,Run0,RunS), (Pattern,Run1,RunS)) :- 
+  call(Pattern, N0, X, Run0), 
+  succ(N0,N1), 
+  call(Pattern, N1, X, Run1), !.
 
-rle(Pattern,[V|In], Out) :-
-  rle1(Pattern,In, V, Out).
+rle_(X, (Pattern,X,RunS), (Pattern,X2,RunS)) :- call(Pattern, 2, X, X2), !.
+rle_(V, (Pattern,Run,[Run|RunS]), (Pattern,V,RunS)) :- V \= Run, !.
 
-rle1(_,[], Acc, [Acc]).
-
-rle1(Pattern,[X|In], X, Out) :-
-  call(Pattern,2,X,Run), !,
-  rle1(Pattern, In,Run,Out), !.
-
-rle1(Pattern,[X|In], Acc, Out) :-
-  call(Pattern,N,X,Acc), !,
-  succ(N,NPrime),
-  call(Pattern,NPrime,X,Run),
-  rle1(Pattern, In,Run,Out), !.
- 
-rle1(Pattern, [V|In], Acc, [Acc|Out]) :-
-  rle1(Pattern, In, V, Out).
+rle(Pattern,[V|VS],Encoded) :- foldl(rle_,VS,(Pattern,V,Encoded),(Pattern,LastRun,[LastRun])).
