@@ -1,0 +1,95 @@
+start = { ability, nl };
+ability = ability-name, COLON, action-list;
+action-list = action, { COMMA, action };
+ability-name = STRING;
+
+action = dam | redamage |  cond | search | deenergize | reenergize | applystat | destat | draw | shuffle | deck | swap | null | add;
+
+
+cond = 'cond', COLON, test, COLON, branch, [ COLON, 'else', COLON, branch ];
+branch = action | (LPAREN, action-list, RPAREN);
+test = 'flip' | 'choice' | arith-inequality | ability-test | healed-test;
+healed-test = 'healed', COLON, target;
+ability-test = 'ability', COLON, branch;
+
+null = 'null';
+
+heal = 'heal', COLON, target, COLON, hp;
+dam = 'dam', COLON, target, COLON, hp;
+redamage = 'redamage', COLON, general-source, COLON, redamage-destination, COLON, hp;
+redamage-destination = 'destination', COLON, 'opponent';
+hp = arith-expr;
+
+deenergize = 'deenergize', COLON, target, energy-cards;
+reenergize = 'reenergize', COLON, target, COLON, target, COLON, energy-cards;
+(* maybe *) reenergize = 'reenergize', COLON, target, COLON, energy-cards(Alpha), COLON, target, COLON, energy-cards(Alpha);
+energy-cards = arith-expr;
+
+applystat = 'applystat', COLON, status, COLON, target-value;
+destat = 'destat', COLON, target;
+status = 'status', COLON, status-type;
+status-type = 'poisoned' | 'paralyzed' | 'stuck' | 'asleep';
+
+draw = 'draw', [ COLON, draw-target ], COLON, arith-expr;
+draw-target = 'opponent';
+
+shuffle = 'shuffle', COLON, shuffle-target;
+shuffle-target = 'target', COLON, ( 'your' | 'opponent' );
+
+
+
+deck = 'deck', COLON, target, COLON, destination, COLON, choice, COLON, arith-expr;
+destination = 'destination', COLON, ( 'deck' | 'discard'), [ COLON, placement-strategy ];
+placement-strategy = 'top' | 'bottom';
+
+add = 'add', COLON, target, COLON, trigger, COLON, ( LPAREN, action-list, RPAREN );
+trigger = 'trigger', COLON, trigger-cause, COLON, trigger-moment;
+trigger-cause = 'opponent';
+trigger-moment = 'turn-end';
+
+swap = 'swap', COLON, general-source, COLON, general-destination, COLON;
+
+
+search = 'search', COLON, target, COLON, search-source, COLON, search-filter, COLON, arith-expr;
+search-source = 'source', COLON, ('discard' | 'deck');
+search-filter = 'filter', COLON, (placement-filter | evolution-filter | selection-filter);
+
+selection-filter = energy-filter | pokemon-filter | trainer-filter;
+energy-filter = 'energy', [ COLON, energy-category ];
+pokemon-filter = 'pokemon', [ COLON, 'cat', COLON, pokemon-category];
+trainer-filter = 'cat', COLON, trainer-category;
+
+energy-category = 'colorless' | 'water' | 'lightning' | 'psychic' | 'fighting';
+pokemon-category = 'basic' | 'stage-one';
+trainer-category = 'item'; (* The rest disappeared - stadium | supporter *)
+
+evolution-filter = 'evolves-from', COLON, evolution-target;
+evolution-target = 'target', COLON, 'last'; (* only one we've seen *)
+
+placement-filter = placement-strategy, [ COLON, search-length ];
+search-length = arith-expr;
+
+target = 'target', COLON, target-value;
+target-value = 'your-active' |  'opponent-active' | ('choice', COLON, choice-option) | last-expr; (* what is last you | them nonexistent??? *)
+choice-option = 'opponent' | 'your' | 'opponent-bench' | 'your-bench';
+
+general-destination = 'destination', COLON, target-value;
+general-source = 'source', COLON, target-value;
+
+last-expr = 'last', [ COLON, 'source'];
+
+
+arith-expr = arith-value, { op, arith-value };
+op = + | - | * | /;
+arith-value = INTEGER | count;
+count = 'count', LPAREN, countable-expr, RPAREN;
+
+countable-expr = target-value, [ COLON, (countable-filter | damage-count-expr) ]; (* Maybe *)
+countable-filter = energy-filter;
+damage-count-expr =  'damage'; (* Really confusing *)
+
+
+arith-inequality = arith-expr, inequality-op, arith-expr;
+inequality-op = < | <= | = | >= | >;
+
+

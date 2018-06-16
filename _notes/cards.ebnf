@@ -1,0 +1,28 @@
+start = { card, NL };
+card = name, COLON, (pokemon-def | trainer-def | energy-def);
+name = STRING;
+
+energy-def = 'energy', COLON, energy-category;
+
+trainer-def = 'trainer', COLON, trainer-category, COLON, ability-id;
+
+trainer-category = 'cat', COLON, trainer-card-type;
+trainer-card-type = 'item' | 'supporter' | 'stadium'; 
+
+ability-id = INTEGER; 
+
+pokemon-def = 'pokemon', COLON, pokemon-category, COLON, energy-category, COLON, hp, COLON, retreat-cost, COLON, attacks-list;
+ 
+pokemon-category = 'cat', COLON, stage;
+stage = 'basic' | ('stage-one', COLON, pokemon-name);
+pokemon-name = name;
+
+retreat-cost = 'retreat', COLON, energy-category, COLON, INTEGER;
+
+attacks-list = 'attacks', COLON, attack, { COMMA, attack };
+attack = energy-requirement-list, COLON, ability-id;
+
+energy-requirement-list = energy-requirement, { COMMA, energy-requirement };
+energy-requirement = energy-category, COLON, INTEGER;
+
+(* fight and fighting are the same thing *)
