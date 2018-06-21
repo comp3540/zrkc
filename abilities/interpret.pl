@@ -1,11 +1,21 @@
-:- module(interpret,[interpret_ability//1]).
+:- module(interpret,[interpret_ability/2,spacey/1]).
+:- use_module(interpret_transform).
 
 
-interpret_ability(ability(name(Name),ActionS)) --> [Name,':'], interpret_list(ActionS).
+spacey(Interpretation) :-
+	atomics_to_string(Interpretation,' ',String),
+	writeln(String).
 
-interpret_list_t([]) --> ['.'].
-interpret_list_t(ActionS) --> [';'], interpret_list(ActionS).
-interpret_list([Action|ActionS]) --> interpret(Action), interpret_list_t(ActionS).
+interpret_ability(Ability,Interpretation) :-
+	prepare_ability(Ability,Ability1),
+	phrase(interpret_ast(Ability1), Interpretation),
+	!.
+
+interpret_ast(ability(name(Name),ActionS)) --> [Name,':'], interpret_list(ActionS).
+
+interpret_list_t(_,[]) --> ['.'].
+interpret_list_t(PrecedingAction,ActionS) --> clause_joiner(PrecedingAction), interpret_list(ActionS).
+interpret_list([Action|ActionS]) --> interpret(Action), interpret_list_t(Action,ActionS).
 
 interpret(Action) --> dam(Action).
 interpret(Action) --> heal(Action).
@@ -22,13 +32,26 @@ interpret(Action) --> swap(Action).
 interpret(Action) --> search(Action).
 interpret(Action) --> cond(Action).
 interpret(Action) --> applystat(Action).
+interpret(Action) --> opponent_context(Action).
+
+clause_joiner(cond(_,_,_)) --> [].
+clause_joiner(opponent_context(_)) --> [].
+clause_joiner(_) --> [';'].
+
+opponent_context(opponent_context(Actions)) --> [the,opponent], interpret_list(Actions).
 
 cond(cond(if(flip),then(T),else(F))) --> flip(T,F).
+cond(cond(if(flip(Times)),then(T),else(F))) --> multiflip(Times,T,F).
 cond(cond(if(choice),then(T),else(F))) --> choice(T,F).
 cond(cond(if(you_do(TrueH)),then(TrueT),else(null))) --> {append(TrueH,TrueT,True)}, you_do(True).
 cond(cond(if(you_do(TrueH)),then(TrueT),else(F))) --> {append(TrueH,TrueT,True)}, choice(True,F).
 cond(cond(if(healed(Target)), then(T), else(F))) --> healed(Target,T,F).
 cond(cond(if(ineq(Ineq)), then(T), else(F))) --> ineq(Ineq,T,F).
+
+multiflip(Times,T,F) --> [flip,a,coin,Times,times,'.',each,time,you,get,heads,','], interpret_list(T), multiflip_else(F).
+multiflip_else(null) --> [].
+multiflip_else(F) --> [each,time,you,get,tails,','], interpret_list(F).
+
 
 flip(T,F) --> [flip,a,coin,'.',if,heads,','], interpret_list(T), flip_else(F).
 flip_else(null) --> [].
@@ -103,11 +126,11 @@ draw(draw(your,Ct)) -->
   quant(Counted).
 
 draw(draw(opponent,Ct)) --> 
-  [the,opponent,draws], count(Ct,arbitrary,units(card,cards),Counted),
+  [draws], count(Ct,arbitrary,units(card,cards),Counted),
    quant(Counted).
 
 shuffle(shuffle(your)) --> [shuffle,your,deck].
-shuffle(shuffle(opponent)) --> [the,opponent,shuffles,their,deck].
+shuffle(shuffle(opponent)) --> [shuffles,their,deck].
 
 null(null) --> [do,nothing].
 
@@ -119,7 +142,7 @@ trigger(opponent,turnend) --> [the,opponent,ends,their,turn].
 trigger(your,turnend) --> [you,end,your,turn].
 
 deck(deck(Who,destination(Where,Placement),choice(Choice),Ct)) -->
-  person_form(Who,v(place,'the opponent places')),    % Whose deck?
+  person_form(Who,v(place,places)),    % Whose deck?
   deck_count(Who,Choice,Ct,Var),                      % How many cards (and who chooses)
   placement_action(Placement),                        % Top or bottom
   deck_dest(Who,Where),                               % Deck or discard

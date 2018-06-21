@@ -30,9 +30,9 @@ traversal(L, Res) :-
 	traversal_list(Transformed,Res).
 
 
-foldr(Reduction, ListI, ListO) :-
-	reverse(ListI,[Last|Rest]),
-	foldl(Reduction, Rest, [Last|[]], ListO).
+foldr(Fold, ListI, ListO) :-
+	reverse(ListI,ListRev),
+	foldl(Fold, ListRev, [], ListO).
 
 opponent_context(ActionS,Result) :-
 	foldr(opponent_context_, ActionS, Result).
@@ -82,7 +82,7 @@ merge_applystat([Action|ActionS],Head) :-
 
 
 
-flip_run(N,cond(if(flip),True,False),cond(if(flip(N),True,False))).
+flip_run(N,cond(if(flip),True,False),cond(if(flip(N)),True,False)).
 
 /**
  * rle(+Pattern, +Input:list, -Encoded:list) is det. 
