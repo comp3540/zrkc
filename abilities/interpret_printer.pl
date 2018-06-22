@@ -4,15 +4,32 @@ punct('.').
 punct(';').
 punct(':').
 
+capitalization_fix(Before,[FL|T],[FLCaps|T]) :-
+	member(Before, [ [], '.', ':' ]),
+	char_type(FLCaps,to_upper(FL)).
 
-print(Atom, S0, S1) :-
+capitalization_fix(_,A,A).
+
+space_fix([],A,A).
+space_fix(_,CharS,[' '|CharS]).
+
+word_fix(Before,Atom,Word) :-
+	atom_chars(Atom,Chars),
+	capitalization_fix(Before,Chars,Chars1),
+	space_fix(Before,Chars1,Chars2),
+	string_chars(Word,Chars2).
+
+
+print(Atom, (_,S0), (Atom,S1)) :-
   punct(Atom), !,
   string_concat(S0,Atom,S1).
 
-print((_,Atom,S0,S2) :-
-  string_concat(S0, ' ', S1),
-  string_concat(S1,Atom,S2).
+
+
+print(Atom,(Before,S0),(Atom,S2)) :-
+  word_fix(Before,Atom,AtomFixed),
+  string_concat(S0,AtomFixed,S2).
 
 
 printer(Interp,Str) :-
-  foldl(print,Interp,([],""),Str).
+  foldl(print,Interp,([],""),(_,Str)).
