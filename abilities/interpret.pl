@@ -13,7 +13,7 @@ interpret_ability(Ability,Interpretation) :-
 
 interpret_ast(ability(name(Name),ActionS)) --> [Name,':'], interpret_list(ActionS).
 
-interpret_list_t(_,[]) --> ['.'].
+interpret_list_t(PrecedingAction,[]) --> clause_ender(PrecedingAction).
 interpret_list_t(PrecedingAction,ActionS) --> clause_joiner(PrecedingAction), interpret_list(ActionS).
 interpret_list([Action|ActionS]) --> interpret(Action), interpret_list_t(Action,ActionS).
 
@@ -37,6 +37,12 @@ interpret(Action) --> opponent_context(Action).
 clause_joiner(cond(_,_,_)) --> [].
 clause_joiner(opponent_context(_)) --> [].
 clause_joiner(_) --> [';'].
+
+
+clause_ender(cond(_,_,_)) --> [].
+clause_ender(opponent_context(_)) --> [].
+clause_ender(_) --> ['.'].
+
 
 opponent_context(opponent_context(Actions)) --> [the,opponent], interpret_list(Actions).
 
