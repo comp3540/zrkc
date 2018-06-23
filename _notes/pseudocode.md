@@ -114,11 +114,31 @@ triggers.opponent.turnend = [() -> $self.hp += 20]
 trigger.hpgoesto0
 
 
+# Red Card:deck:target:opponent:destination:deck:count(opponent-hand),shuffle:target:opponent,draw:opponent:4
 
-x = &y;
-() -> x[1]++
-x = &z;
+$1 = length(board.opponent.hand)
+$2 = board.opponent.hand.pop($1)
+board.opponent.deck.push($2)
+board.opponent.deck.shuffle();
+$3 = board.opponent.deck.pop(4);
+board.opponent.hand.push($3);
 
+
+# Wally:search:target:choice:your-pokemon:cat:basic:source:deck:filter:evolves-from:target:last:1,shuffle:target:your
+
+$1 = ?search(1,filter([board.your.bench,board.your.active]), (p -> p.cat = basic));
+$2 = ?search(1,filter([board.your.deck],(p -> p.evolvesFrom = $1)));
+$2.evolvedFrom = $1;
+$1.parent.push($2);
+$1.parent -= [$1];
+board.your.deck.shuffle();
+
+-------
+
+$1 = filter([board.your.bench,board.your.active], (p -> p.cat = basic))
+$2 = ?search(1,filter([board.your.deck],(p -> filter([$1], (q -> p.evolvesFrom = q)))) 
+
+* Probably better if there was one search dialog with a more advanced filter
 
 # Shauna:deck:target:your:destination:deck:count(your-hand),shuffle:target:your,draw:5
 
@@ -127,6 +147,25 @@ board.your.deck.push($1)
 board.your.deck.shuffle()
 $2 = board.your.deck.pop(5);
 board.your.hand.push($2)
+
+
+# Sleep Poison:cond:flip:(applystat:status:asleep:opponent-active,applystat:status:poisoned:opponent-active)
+
+if (rand()) {
+  board.oppnent.active.status += [asleep,poisoned]
+}
+
+# Misty's Determination:cond:ability:deck:target:your:destination:discard:choice:you:1:(search:target:your:source:deck:filter:top:8:1,shuffle:target:your)
+
+if (?agrees()) {
+  $1 = ?select(1,filter([board.your.hand],any));
+  board.your.hand -= [$1];
+  board.your.discard.push($1);
+  $2 = ?select(1,filter([board.your.deck[1:8]],any));
+  board.your.hand.push($2)
+  board.your.deck.shuffle();
+}
+
 
 
 

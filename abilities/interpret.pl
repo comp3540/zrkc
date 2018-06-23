@@ -239,11 +239,12 @@ search_take(Amount,Filter) --> {filter(Filter,Sing,[card]), filter(Filter,Pl,[ca
 
 applystat(applystatus(Status,target(Target))) --> target(Target), [is,now], list(Status).
 
-
+% Missing evolves from and fake target your-pokemon
 filter(energy(EnergyType)) --> energy_card(EnergyType), [energy].
 filter(trainer(Type)) --> trainer_card(Type).
 filter(pokemon(Stage)) --> pokemon_card(Stage), [pokemon].
 filter(damage) --> [damage]. % damage counters
+filter(evolves_from(choice(dChoice,Target)) --> [that,evolves,from], target(Target).
 
 trainer_card(item) --> [item].
 trainer_card(supporter) --> [supporter].

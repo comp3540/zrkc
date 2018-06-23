@@ -103,7 +103,7 @@ swap(swap(Source,Dest)) --> id(swap), [colon], swap_source(Source), [colon], swa
 swap_source(source(TargetValue)) --> id(source), [colon], target_value(TargetValue).
 swap_dest(destination(TargetValue)) --> id(destination), [colon], target_value(TargetValue).
 
-search(search(Target, SearchSource,Filter,Amount)) --> id(search), [colon], id(target), [colon], tv_wally(choice(Target,InnerFilter)), [colon], search_source(SearchSource), [colon], search_wally_filter(Filter,choice(Target-InnerFilter)), [colon], arith(Amount).
+search(search(Target, SearchSource,Filter,Amount)) --> id(search), [colon], id(target), [colon], tv_wally(choice(Target,InnerFilter)), [colon], search_source(SearchSource), [colon], search_wally_filter(Filter,choice(Target,InnerFilter)), [colon], arith(Amount).
 
 search(search(Target,SearchSource,Filter,Amount)) --> id(search), [colon], id(target), [colon], person_target(Target), [colon], search_source(SearchSource), [colon], search_filter(Filter), [colon], arith(Amount).
 
