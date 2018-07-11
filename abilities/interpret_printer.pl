@@ -1,3 +1,4 @@
+:- module(interpret_printer,[printer/2]).
 
 punct(',').
 punct('.').

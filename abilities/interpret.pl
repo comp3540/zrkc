@@ -244,7 +244,7 @@ filter(energy(EnergyType)) --> energy_card(EnergyType), [energy].
 filter(trainer(Type)) --> trainer_card(Type).
 filter(pokemon(Stage)) --> pokemon_card(Stage), [pokemon].
 filter(damage) --> [damage]. % damage counters
-filter(evolves_from(choice(dChoice,Target)) --> [that,evolves,from], target(Target).
+filter(evolves_from(choice(dChoice,Target))) --> [that,evolves,from], target(Target).
 
 trainer_card(item) --> [item].
 trainer_card(supporter) --> [supporter].
