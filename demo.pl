@@ -5,6 +5,7 @@
 :- use_module(abilities/abilities).
 :- use_module(abilities/interpret).
 :- use_module(abilities/interpret_printer).
+:- use_module(pipeline/pipeline).
 
 parse_card(String,AST) :-
 	lex(String,Tokens),

@@ -56,4 +56,3 @@ Red Card:trainer:cat:item:73
 Wally:trainer:cat:supporter:74
 Fight:energy:cat:fight
 Psychic:energy:cat:psychic
-
