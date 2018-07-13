@@ -2,43 +2,58 @@
 :- use_module(library(http/json)).
 
 to_json(Struct,JSONString) :-
-  dictify_args([Struct],DictList),
+  dictify_list(Struct,DictList),
   atom_json_term(JSONString,DictList,[as(string)]).
 
-json_map(nil,@null).
-json_map(V,V).
+% We lazily give an alias for the clause
+% that processes lists
+dictify_list(List,ListJSON) :-
+  dictify_args([List],ListJSON).
 
-% A compound term is Functor:Values, with Values being a single dict
-dictify_term(Term,Key=Values) :-
-  compound(Term),
+% Replace our arbitrary Prolog atoms with the JSON null-type
+literal_to_json(nil,@null).
+% Pass-through: Prolog already knows about the rest
+literal_to_json(V,V).
+
+
+% F(values) => F: json
+% We don't yet know what should be done with values,
+% or even what's in them
+term_to_tuple(Term,Key=Values) :-
   Term =.. [Key|Args],
   dictify_args(Args,Values).
 
-dictify_term(Raw,RawJSON) :-
-  json_map(Raw,RawJSON).
 
-% A single list argument uses dictify_pack
-% A list becomes a list of dictionaries
-dictify_args([List],DictList) :-
-  is_list(List),
-  maplist(dictify_pack,List,DictList).
+% RHS is a Prolog non-compound => JSON literal
+% e.g. atoms, numbers, strings
+dictify_args([Literal],LiteralJSON) :-
+  Literal =.. [Literal],
+  literal_to_json(Literal,LiteralJSON).
 
-% A single argument is represented by itself
-dictify_args([Arg],Arg1) :-
-  Arg =.. [Arg],
-  dictify_term(Arg,Arg1).
 
-% The arguments to a compound term form a single dict
-% Multiple arguments: one dictionary, key:value
-dictify_args(Args,Dict) :-
-  maplist(dictify_term,Args,Tuples),
-  dict_create(Dict,@,Tuples).
+% RHS is a Prolog list => JSON list
+% If values was just one list, it stays a list
+% The terms in the list are each their own objects
+dictify_args([ListOfTerms],ListOfObjects) :-
+  is_list(ListOfTerms),
+  maplist(term_to_object,ListOfTerms,ListOfObjects).
 
-% Dictify pack
-dictify_pack(Term,Dict) :-
+
+% RHS is a bunch of Prolog arguments => JSON object
+% If values are a bunch of other terms, we create one object for them,
+% treating the functor as key, and once again the values may vary
+dictify_args(ListOfTerms,SingleObject) :-
+  maplist(term_to_tuple,ListOfTerms,ListOfTuples),
+  dict_create(SingleObject,@,ListOfTuples).
+
+
+% Element is a Prolog term => JSON object
+term_to_object(Term,Object) :-
   compound(Term),
-  dictify_term(Term,Tuples),
-  dict_create(Dict,?,[Tuples]).
+  term_to_tuple(Term,Tuples),
+  dict_create(Object,?,[Tuples]).
 
-dictify_pack(Val,TermVal) :-
-  dictify_term(Val,TermVal).
+
+% Element is a Prolog non-compound => JSON literal 
+term_to_object(Literal,LiteralJSON) :-
+    literal_to_json(Literal,LiteralJSON).
