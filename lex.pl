@@ -16,7 +16,7 @@ lex_symbol("=","=",eq).
 lex_symbol(">=",">=",geq).
 lex_symbol(">",">",gt).
 lex_symbol("!=","!=",neq).
-
+lex_symbol("#","#",hash). % Hash produces a nil card, to keep numbering as per Thiel's deck.txt format
 
 lex_value(int,"^(0|[1-9][0-9]*)$", number_string).
 lex_value(atom,"^[a-z-]+$", atom_string).

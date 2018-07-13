@@ -2,13 +2,15 @@
 :- use_module(lex).
 
 cards_t([]) --> [].
-cards_t(L) --> [nl], cards(L).
+cards_t(L) --> cards(L).
 
-cards([H|T]) --> card(H), cards_t(T).
+cards([H|T]) --> card(H), [nl], cards_t(T).
 
+card(nil) --> [hash]. % Eat comments while keeping numbering
 card(card(C)) --> pokemon_card(C).
 card(card(C)) --> energy_card(C).
 card(card(C)) --> trainer_card(C).
+card(nil) --> []. % Eat blank lines while keeping numbering
 
 energy_card(energy(Name,EnergyType)) --> [string(Name), colon, atom(energy),colon], energy_cat(EnergyType).
 
@@ -48,4 +50,4 @@ requirement_list_t([]) --> [].
 requirement_list_t(L) --> [comma], requirement_list(L).
 requirement_list([H|T]) --> requirement(H), requirement_list_t(T).
 
-requirement((energy(EnergyType),NCards)) --> energy_cat(EnergyType), [colon,int(NCards)].
+requirement(req(energy(EnergyType),NCards)) --> energy_cat(EnergyType), [colon,int(NCards)].
