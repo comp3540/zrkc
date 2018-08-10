@@ -1,0 +1,232 @@
+[
+  {
+    "interpretation":"Act Cute: The opponent places 1 card from their hand at the bottom of their deck.",
+    "name":"Act Cute"
+  },
+  {"interpretation":"Scratch: Do 20 damage.", "name":"Scratch"},
+  {
+    "interpretation":"Quick Attack: Do 10 damage; flip a coin. If heads, do 30 damage.",
+    "name":"Quick Attack"
+  },
+  {
+    "interpretation":"Flying Elekick: Do 50 damage.",
+    "name":"Flying Elekick"
+  },
+  {
+    "interpretation":"Nuzzle: Flip a coin. If heads, the opponent`s active pokemon is now paralyzed.",
+    "name":"Nuzzle"
+  },
+  {
+    "interpretation":"Quick Attack: Do 20 damage; flip a coin. If heads, do 10 damage.",
+    "name":"Quick Attack"
+  },
+  {
+    "interpretation":"Circle Circuit: Do 20 damage to the opponent`s active pokemon for every card in your bench.",
+    "name":"Circle Circuit"
+  },
+  {
+    "interpretation":"Thunderbolt: Do 100 damage; remove all of the energy cards from your active pokemon.",
+    "name":"Thunderbolt"
+  },
+  {
+    "interpretation":"Rain Splash: Do 20 damage.",
+    "name":"Rain Splash"
+  },
+  {
+    "interpretation":"Soaking Horn: Do 10 damage; if your active pokemon was healed during this turn then do 80 damage.",
+    "name":"Soaking Horn"
+  },
+  {
+    "interpretation":"Reckless Charge: Do 40 damage; do 10 damage to your active pokemon.",
+    "name":"Reckless Charge"
+  },
+  {
+    "interpretation":"Reckless Charge: Do 20 damage; do 10 damage to your active pokemon.",
+    "name":"Reckless Charge"
+  },
+  {"interpretation":"Cut: Do 30 damage.", "name":"Cut"},
+  {"interpretation":"Pound: Do 10 damage.", "name":"Pound"},
+  {
+    "interpretation":"Clamp Crush: Do 30 damage; flip a coin. If heads, remove 1 energy card from the opponent`s active pokemon. The opponent`s active pokemon is now paralyzed.",
+    "name":"Clamp Crush"
+  },
+  {
+    "interpretation":"Spike Cannon: Do 30 damage; flip a coin 5 times. Each time you get heads, do 30 damage.",
+    "name":"Spike Cannon"
+  },
+  {
+    "interpretation":"Spiral Drain: Do 20 damage; heal 20 damage from your active pokemon.",
+    "name":"Spiral Drain"
+  },
+  {
+    "interpretation":"Aurora Beam: Do 80 damage.",
+    "name":"Aurora Beam"
+  },
+  {
+    "interpretation":"Wing Attack: Do 20 damage.",
+    "name":"Wing Attack"
+  },
+  {
+    "interpretation":"Brave Bird: Do 80 damage; do 20 damage to your active pokemon.",
+    "name":"Brave Bird"
+  },
+  {
+    "interpretation":"Lunge: Flip a coin. If heads, do 20 damage.",
+    "name":"Lunge"
+  },
+  {"interpretation":"Slash: Do 30 damage.", "name":"Slash"},
+  {
+    "interpretation":"Nyan Press: Do 40 damage; flip a coin. If heads, do 40 damage. If tails, the opponent`s active pokemon is now paralyzed.",
+    "name":"Nyan Press"
+  },
+  {
+    "interpretation":"Random Spark: Do 30 damage to one of the opponent`s pokemon.",
+    "name":"Random Spark"
+  },
+  {"interpretation":"Bite: Do 40 damage.", "name":"Bite"},
+  {"interpretation":"Bite: Do 10 damage.", "name":"Bite"},
+  {
+    "interpretation":"Knuckle Punch: Do 30 damage.",
+    "name":"Knuckle Punch"
+  },
+  {
+    "interpretation":"Electroslug: Do 90 damage.",
+    "name":"Electroslug"
+  },
+  {
+    "interpretation":"Knuckle Punch: Do 20 damage.",
+    "name":"Knuckle Punch"
+  },
+  {
+    "interpretation":"Destructive Beam: Flip a coin. If heads, remove 1 energy card from the opponent`s active pokemon.",
+    "name":"Destructive Beam"
+  },
+  {"interpretation":"Tierno: Draw 3 cards.", "name":"Tierno"},
+  {
+    "interpretation":"Potion: Heal 30 damage from one of your pokemon.",
+    "name":"Potion"
+  },
+  {
+    "interpretation":"Misty's Determination: If you choose to use this ability place 1 card from your hand onto your discard pile; look through the top 8 cards of your deck, then take 1 card; shuffle your deck.",
+    "name":"Misty's Determination"
+  },
+  {
+    "interpretation":"Pokémon Center Lady: Heal 60 damage from one of your pokemon; all status effects are now removed from that pokemon.",
+    "name":"Pokémon Center Lady"
+  },
+  {
+    "interpretation":"Ear Influence: Distribute all of the damage counters from one of the opponent`s pokemon among the rest of the opponent`s pokemon.",
+    "name":"Ear Influence"
+  },
+  {
+    "interpretation":"Psychic: Do 60 damage; do 10 damage to the opponent`s active pokemon for every energy card on the opponent`s active pokemon.",
+    "name":"Psychic"
+  },
+  {
+    "interpretation":"Hug: Do 30 damage; the opponent`s active pokemon is now stuck.",
+    "name":"Hug"
+  },
+  {
+    "interpretation":"Wish: Look through your deck, then take 1 card.",
+    "name":"Wish"
+  },
+  {"interpretation":"Heart Sign: Do 50 damage.", "name":"Heart Sign"},
+  {
+    "interpretation":"Exhausted Tackle: Flip a coin. If heads, do 30 damage. If tails, do 30 damage to your active pokemon.",
+    "name":"Exhausted Tackle"
+  },
+  {
+    "interpretation":"Knuckle Punch: Do 10 damage.",
+    "name":"Knuckle Punch"
+  },
+  {
+    "interpretation":"Double Stab: Flip a coin 2 times. Each time you get heads, do 10 damage.",
+    "name":"Double Stab"
+  },
+  {
+    "interpretation":"Doduo Delivery: Draw 2 cards.",
+    "name":"Doduo Delivery"
+  },
+  {
+    "interpretation":"Fury Attack: Do 40 damage; flip a coin 3 times. Each time you get heads, do 40 damage.",
+    "name":"Fury Attack"
+  },
+  {"interpretation":"Rollout: Do 10 damage.", "name":"Rollout"},
+  {
+    "interpretation":"Flail: Do 10 damage to the opponent`s active pokemon for every damage counter on your active pokemon.",
+    "name":"Flail"
+  },
+  {"interpretation":"Skill Dive: Do 10 damage.", "name":"Skill Dive"},
+  {
+    "interpretation":"Poison Ring: The opponent`s active pokemon is now poisoned and stuck.",
+    "name":"Poison Ring"
+  },
+  {
+    "interpretation":"Sleep Poison: Flip a coin. If heads, the opponent`s active pokemon is now poisoned and asleep.",
+    "name":"Sleep Poison"
+  },
+  {
+    "interpretation":"Mine: Look at the top card of the opponent`s deck; if you so choose, the opponent shuffles their deck.",
+    "name":"Mine"
+  },
+  {"interpretation":"Mud Slap: Do 20 damage.", "name":"Mud Slap"},
+  {
+    "interpretation":"Earthquake: Do 60 damage; do 10 damage to your bench.",
+    "name":"Earthquake"
+  },
+  {
+    "interpretation":"Rock Tumble: Do 60 damage.",
+    "name":"Rock Tumble"
+  },
+  {"interpretation":"Scratch: Do 10 damage.", "name":"Scratch"},
+  {
+    "interpretation":"Spacing Out: Flip a coin. If heads, heal 10 damage from your active pokemon.",
+    "name":"Spacing Out"
+  },
+  {
+    "interpretation":"Stretch Kick: Do 30 damage to one of your opponent`s benched pokemon.",
+    "name":"Stretch Kick"
+  },
+  {
+    "interpretation":"Spiral Kick: Do 30 damage.",
+    "name":"Spiral Kick"
+  },
+  {
+    "interpretation":"Bullet Punch: Do 20 damage; flip a coin 2 times. Each time you get heads, do 20 damage.",
+    "name":"Bullet Punch"
+  },
+  {"interpretation":"Mach Cross: Do 60 damage.", "name":"Mach Cross"},
+  {"interpretation":"Beatdown: Do 40 damage.", "name":"Beatdown"},
+  {
+    "interpretation":"Twinkle: The opponent`s active pokemon is now asleep.",
+    "name":"Twinkle"
+  },
+  {
+    "interpretation":"Fake Out: Do 30 damage; flip a coin. If heads, the opponent`s active pokemon is now paralyzed.",
+    "name":"Fake Out"
+  },
+  {
+    "interpretation":"Ambush: Do 40 damage; flip a coin. If heads, do 30 damage.",
+    "name":"Ambush"
+  },
+  {
+    "interpretation":"Floral Crown: Each time the opponent ends their turn, heal 20 damage from the pokemon to which this card is attached..",
+    "name":"Floral Crown"
+  },
+  {
+    "interpretation":"Shauna: Place all the cards in your hand onto your deck; shuffle your deck; draw 5 cards.",
+    "name":"Shauna"
+  },
+  {
+    "interpretation":"Switch: Switch your active pokemon with one of your benched pokemon. All status effects are removed from that pokemon.",
+    "name":"Switch"
+  },
+  {
+    "interpretation":"Energy Switch: Move 1 energy from one of your pokemon to another one of your pokemon.",
+    "name":"Energy Switch"
+  },
+  {
+    "interpretation":"Red Card: The opponent places all the cards in their hand onto their deck; shuffles their deck; draws 4 cards.",
+    "name":"Red Card"
+  }
+]
