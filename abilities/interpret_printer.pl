@@ -1,4 +1,4 @@
-:- module(interpret_printer,[printer/2]).
+:- module(interpret_printer,[printed_text/2]).
 
 punct(',').
 punct('.').
@@ -32,5 +32,5 @@ print(Atom,(Before,S0),(Atom,S2)) :-
   string_concat(S0,AtomFixed,S2).
 
 
-printer(Interp,Str) :-
+printed_text(Interp,Str) :-
   foldl(print,Interp,([],""),(_,Str)).

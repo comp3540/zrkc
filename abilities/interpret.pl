@@ -1,14 +1,12 @@
-:- module(interpret,[interpret_ability/2,spacey/1]).
+:- module(interpret,[interpret_ability/2]).
 :- use_module(interpret_transform).
+:- use_module(interpret_printer).
 
 
-spacey(Interpretation) :-
-	atomics_to_string(Interpretation,' ',String),
-	writeln(String).
-
-interpret_ability(Ability,Interpretation) :-
+interpret_ability(Ability,Text) :-
 	prepare_ability(Ability,Ability1),
 	phrase(interpret_ast(Ability1), Interpretation),
+  printed_text(Interpretation, Text),
 	!.
 
 interpret_ast(ability(name(Name),ActionS)) --> [Name,':'], interpret_list(ActionS).
@@ -234,6 +232,7 @@ search_source(Person,discard) --> person_long(Person,'discard pile').
 
 search_take(0,_) --> [].
 search_take(Amount,placement(_,_)) --> [',',then,take], count(Amount,arbitrary,units(card,cards),[]).
+search_take(Amount,any) --> [',',then,take], count(Amount,arbitrary,units(card,cards),[]).
 search_take(Amount,Filter) --> {filter(Filter,Sing,[card]), filter(Filter,Pl,[cards])}, [',',then,take], count(Amount,arbitrary,units(Sing,Pl),Var), quant(Var).
 
 

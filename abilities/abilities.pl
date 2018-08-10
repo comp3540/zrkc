@@ -3,15 +3,15 @@
 :- use_module(cards).
 :- use_module(arith).
 
+abilities_t(L) -->  abilities(L). 
 abilities_t([]) --> [].
-abilities_t(L) --> [nl], abilities(L). 
 
-abilities([H|T]) --> ability(H), abilities_t(T).
+abilities([H|T]) --> ability(H), [nl], abilities_t(T).
 
-ability(ability(name(Name),Actions)) --> [string(Name),colon], action_list(Actions).
+ability(ability(name(Name),Actions)) --> [string(Name),colon], action_list(Actions), !, {writeln(Name)}.
 
-action_list_t([]) --> [].
 action_list_t(L) --> [comma], action_list(L).
+action_list_t([]) --> [].
 action_list([H|T]) --> action(H), action_list_t(T).
 
 action(Act) --> cond(Act).
@@ -33,8 +33,8 @@ action(Act) --> search(Act).
 null(null) --> id(null).
 cond(cond(if(Test),then(True),else(False))) --> id(cond), [colon], test(Test), [colon], branch(True), branch_option(False).
 
-branch_option(null) --> [].
 branch_option(Branch) --> [colon], id(else), [colon], branch(Branch).
+branch_option(null) --> [].
 
 test(flip) --> id(flip).
 test(choice) --> id(choice).
@@ -105,10 +105,11 @@ swap_dest(destination(TargetValue)) --> id(destination), [colon], target_value(T
 
 search(search(Target, SearchSource,Filter,Amount)) --> id(search), [colon], id(target), [colon], tv_wally(choice(Target,InnerFilter)), [colon], search_source(SearchSource), [colon], search_wally_filter(Filter,choice(Target,InnerFilter)), [colon], arith(Amount).
 
-search(search(Target,SearchSource,Filter,Amount)) --> id(search), [colon], id(target), [colon], person_target(Target), [colon], search_source(SearchSource), [colon], search_filter(Filter), [colon], arith(Amount).
+search(search(Target,SearchSource,Filter,Amount)) --> id(search), [colon], id(target), [colon], person_target(Target), [colon], search_source(SearchSource), search_filter(Filter), [colon], arith(Amount).
 
 search_source(source(DDT)) --> id(source), [colon], deck_dest_to(DDT).
-search_filter(filter(Filter)) --> id(filter), [colon], searchable_filter(Filter).
+search_filter(filter(Filter)) --> [colon], id(filter), [colon], searchable_filter(Filter).
+search_filter(filter(any)) --> []. % HACK FIXME
 
 search_wally_filter(filter(Filter),InnerFilter) --> id(filter), [colon], search_wally_filter_tail(Filter,InnerFilter).
 search_wally_filter_tail(Filter,InnerFilter) --> evolution_filter(Filter,InnerFilter).
@@ -120,8 +121,8 @@ searchable_filter(F) --> selection_filter(F).
 searchable_filter(F) --> evolution_filter(F,idk).
 
 placement_filter(placement(Strategy,Length)) --> placement_strategy(Strategy), search_length(Length).
-search_length(all) --> [].
 search_length(N) --> [colon], arith(N).
+search_length(all) --> [].
 
 selection_filter(F) --> energy_filter(F).
 selection_filter(F) --> pokemon_filter(F).
@@ -164,10 +165,11 @@ tv_direct(your_bench) --> id(your-bench).
 tv_direct(opponent_bench) --> id(opponent-bench).
 tv_direct(self) --> id(self).
 
+
+tv_choice(your_bench) --> id(your-bench).
 tv_choice(opponent) --> id(opponent).
 tv_choice(your) --> id(your).
 tv_choice(opponent_bench) --> id(opponent-bench).
-tv_choice(your_bench) --> id(your-bench).
 tv_choice(your_hand) --> id(your-hand).
 tv_choice(opponent_hand) --> id(opponent-hand).
 

@@ -27,5 +27,4 @@ demo(String) :-
   parse_ability(String,AST),
   print_term(AST,[]), nl,
   interpret_ability(AST,Interp),
-  printer(Interp,Str),
-  writeln(Str), !.  
+  writeln(Interp), !.  
